@@ -1,0 +1,464 @@
+{
+  "users": [
+    {
+      "email": "manager@transitops.com",
+      "password": "password123",
+      "name": "Sarah Connor",
+      "role": "Fleet Manager"
+    },
+    {
+      "email": "driver@transitops.com",
+      "password": "password123",
+      "name": "Alex Mercer",
+      "role": "Driver"
+    },
+    {
+      "email": "safety@transitops.com",
+      "password": "password123",
+      "name": "Priya Patel",
+      "role": "Safety Officer"
+    },
+    {
+      "email": "finance@transitops.com",
+      "password": "password123",
+      "name": "John Doe",
+      "role": "Financial Analyst"
+    }
+  ],
+  "vehicles": [
+    {
+      "registrationNumber": "VAN-05",
+      "model": "Ford Transit 2023",
+      "type": "Van",
+      "maxCapacity": 500,
+      "odometer": 15400,
+      "acquisitionCost": 32000,
+      "status": "Available",
+      "acquisitionDate": "2024-03-15",
+      "fuelLevel": 12,
+      "vehicleAge": 2.3,
+      "lastOilChangeKm": 11000,
+      "nextServiceDate": "2026-08-15",
+      "documents": {
+        "insurance": {
+          "status": "Active",
+          "expiry": "2026-12-01",
+          "docId": "INS-9921"
+        },
+        "puc": {
+          "status": "Expired",
+          "expiry": "2026-07-05",
+          "docId": "PUC-8812"
+        },
+        "roadTax": {
+          "status": "Active",
+          "expiry": "2027-03-31",
+          "docId": "TAX-1102"
+        }
+      }
+    },
+    {
+      "registrationNumber": "TRK-10",
+      "model": "Volvo FH16 Flatbed",
+      "type": "Truck",
+      "maxCapacity": 2500,
+      "odometer": 89400,
+      "acquisitionCost": 95000,
+      "status": "Available",
+      "acquisitionDate": "2021-08-10",
+      "fuelLevel": 68,
+      "vehicleAge": 4.9,
+      "lastOilChangeKm": 80000,
+      "nextServiceDate": "2026-07-16",
+      "documents": {
+        "insurance": {
+          "status": "Active",
+          "expiry": "2026-10-18",
+          "docId": "INS-7722"
+        },
+        "puc": {
+          "status": "Active",
+          "expiry": "2026-09-12",
+          "docId": "PUC-5521"
+        },
+        "roadTax": {
+          "status": "Active",
+          "expiry": "2026-08-30",
+          "docId": "TAX-4451"
+        }
+      }
+    },
+    {
+      "registrationNumber": "SPR-02",
+      "model": "Mercedes Sprinter",
+      "type": "Van",
+      "maxCapacity": 800,
+      "odometer": 32000,
+      "acquisitionCost": 42000,
+      "status": "In Shop",
+      "acquisitionDate": "2023-01-20",
+      "fuelLevel": 45,
+      "vehicleAge": 3.5,
+      "lastOilChangeKm": 25000,
+      "nextServiceDate": "2026-09-10",
+      "documents": {
+        "insurance": {
+          "status": "Active",
+          "expiry": "2026-11-20",
+          "docId": "INS-5531"
+        },
+        "puc": {
+          "status": "Active",
+          "expiry": "2026-10-05",
+          "docId": "PUC-3312"
+        },
+        "roadTax": {
+          "status": "Active",
+          "expiry": "2027-01-15",
+          "docId": "TAX-3301"
+        }
+      }
+    }
+  ],
+  "drivers": [
+    {
+      "email": "alex@transitops.com",
+      "name": "Alex Mercer",
+      "licenseNumber": "DL-14202100874",
+      "licenseCategory": "Heavy Vehicle",
+      "licenseExpiry": "2026-07-28",
+      "contact": "+1 (555) 019-2834",
+      "safetyScore": 4.8,
+      "status": "Available",
+      "reviews": [
+        {
+          "passenger": "Warehouse Manager A",
+          "rating": 5,
+          "comment": "Punctual, handles cargo with care."
+        },
+        {
+          "passenger": "Dispatch Supervisor",
+          "rating": 4.5,
+          "comment": "Polite and responsive driver."
+        },
+        {
+          "passenger": "Client Receiver X",
+          "rating": 5,
+          "comment": "Arrived exactly on time, very helpful."
+        }
+      ],
+      "attendance": [
+        {
+          "date": "2026-07-06",
+          "status": "Present",
+          "checkIn": "08:00",
+          "checkOut": "17:00",
+          "hours": 9
+        },
+        {
+          "date": "2026-07-07",
+          "status": "Present",
+          "checkIn": "08:15",
+          "checkOut": "18:15",
+          "hours": 10
+        },
+        {
+          "date": "2026-07-08",
+          "status": "Present",
+          "checkIn": "08:00",
+          "checkOut": "17:30",
+          "hours": 9.5
+        },
+        {
+          "date": "2026-07-09",
+          "status": "Present",
+          "checkIn": "07:45",
+          "checkOut": "19:00",
+          "hours": 11.25
+        },
+        {
+          "date": "2026-07-10",
+          "status": "Present",
+          "checkIn": "08:00",
+          "checkOut": "16:00",
+          "hours": 8
+        },
+        {
+          "date": "2026-07-11",
+          "status": "Present",
+          "checkIn": "08:30",
+          "checkOut": "14:30",
+          "hours": 6
+        },
+        {
+          "date": "2026-07-12",
+          "status": "Present",
+          "checkIn": "4:08:",
+          "checkOut": "4:08:",
+          "hours": 8
+        }
+      ],
+      "documents": {
+        "drivingLicense": {
+          "status": "Active",
+          "expiry": "2026-07-28",
+          "docId": "DL-9901"
+        },
+        "medicalCertificate": {
+          "status": "Active",
+          "expiry": "2027-02-15",
+          "docId": "MED-402"
+        },
+        "backgroundCheck": {
+          "status": "Active",
+          "expiry": "2029-05-30",
+          "docId": "BG-881"
+        }
+      }
+    },
+    {
+      "email": "carlos@transitops.com",
+      "name": "Carlos Garcia",
+      "licenseNumber": "DL-1599827361",
+      "licenseCategory": "Medium Commercial",
+      "licenseExpiry": "2029-10-11",
+      "contact": "+1 (555) 012-7729",
+      "safetyScore": 4.1,
+      "status": "On Trip",
+      "reviews": [
+        {
+          "passenger": "Client Y Office",
+          "rating": 3.8,
+          "comment": "Drove slightly fast over speed bumps."
+        },
+        {
+          "passenger": "Logistics Staff",
+          "rating": 4.2,
+          "comment": "Good driving, tidy cabin."
+        }
+      ],
+      "attendance": [
+        {
+          "date": "2026-07-06",
+          "status": "Present",
+          "checkIn": "09:00",
+          "checkOut": "17:00",
+          "hours": 8
+        },
+        {
+          "date": "2026-07-07",
+          "status": "Present",
+          "checkIn": "09:00",
+          "checkOut": "17:00",
+          "hours": 8
+        },
+        {
+          "date": "2026-07-08",
+          "status": "Present",
+          "checkIn": "09:00",
+          "checkOut": "17:00",
+          "hours": 8
+        },
+        {
+          "date": "2026-07-09",
+          "status": "Present",
+          "checkIn": "09:00",
+          "checkOut": "17:00",
+          "hours": 8
+        },
+        {
+          "date": "2026-07-10",
+          "status": "Present",
+          "checkIn": "09:00",
+          "checkOut": "17:00",
+          "hours": 8
+        }
+      ],
+      "documents": {
+        "drivingLicense": {
+          "status": "Active",
+          "expiry": "2029-10-11",
+          "docId": "DL-8812"
+        },
+        "medicalCertificate": {
+          "status": "Active",
+          "expiry": "2028-09-01",
+          "docId": "MED-110"
+        },
+        "backgroundCheck": {
+          "status": "Active",
+          "expiry": "2030-01-20",
+          "docId": "BG-229"
+        }
+      }
+    },
+    {
+      "email": "liam@transitops.com",
+      "name": "Liam Chen",
+      "licenseNumber": "DL-1620593712",
+      "licenseCategory": "Heavy Vehicle",
+      "licenseExpiry": "2026-07-15",
+      "contact": "+1 (555) 018-3382",
+      "safetyScore": 3.5,
+      "status": "Suspended",
+      "reviews": [],
+      "attendance": [],
+      "documents": {
+        "drivingLicense": {
+          "status": "Active",
+          "expiry": "2026-07-15",
+          "docId": "DL-5523"
+        },
+        "medicalCertificate": {
+          "status": "Expired",
+          "expiry": "2026-06-30",
+          "docId": "MED-991"
+        },
+        "backgroundCheck": {
+          "status": "Active",
+          "expiry": "2029-12-01",
+          "docId": "BG-445"
+        }
+      }
+    }
+  ],
+  "trips": [
+    {
+      "id": "T-1001",
+      "source": "Logistics Depot A",
+      "destination": "Main Warehouse",
+      "vehicleReg": "VAN-05",
+      "driverEmail": "alex@transitops.com",
+      "cargoWeight": 450,
+      "distance": 35,
+      "status": "Completed",
+      "fuelConsumed": 10,
+      "endOdometer": 15400,
+      "date": "2026-07-11"
+    },
+    {
+      "id": "T-1002",
+      "source": "Main Warehouse",
+      "destination": "Retail Outlet Y",
+      "vehicleReg": "TRK-10",
+      "driverEmail": "carlos@transitops.com",
+      "cargoWeight": 2200,
+      "distance": 110,
+      "status": "Dispatched",
+      "fuelConsumed": 0,
+      "endOdometer": 0,
+      "date": "2026-07-12"
+    }
+  ],
+  "maintenanceLogs": [
+    {
+      "id": "M-5001",
+      "vehicleReg": "SPR-02",
+      "description": "Routine brake replacement and oil change",
+      "cost": 450,
+      "status": "In Progress",
+      "date": "2026-07-12"
+    }
+  ],
+  "fuelLogs": [
+    {
+      "id": "FL-3001",
+      "vehicleReg": "VAN-05",
+      "liters": 35,
+      "cost": 55,
+      "date": "2026-07-11"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "EXP-4001",
+      "vehicleReg": "VAN-05",
+      "type": "Toll Tax",
+      "amount": 15,
+      "date": "2026-07-11",
+      "description": "Highway toll during main route dispatch"
+    }
+  ],
+  "fines": [
+    {
+      "id": "F-8001",
+      "driverEmail": "alex@transitops.com",
+      "vehicleReg": "VAN-05",
+      "date": "2026-07-09",
+      "amount": 150,
+      "type": "Working Hours Limit Breach",
+      "description": "Worked 11.25 hours, exceeding the maximum daily working limit of 10 hours."
+    },
+    {
+      "id": "F-8002",
+      "driverEmail": "carlos@transitops.com",
+      "vehicleReg": "TRK-10",
+      "date": "2026-07-10",
+      "amount": 200,
+      "type": "Duplicate Trip Violation",
+      "description": "Logged trip id T-1002 twice under different cargo manifests."
+    }
+  ],
+  "activityLogs": [
+    {
+      "timestamp": "2026-07-12T08:30:00",
+      "user": "manager@transitops.com",
+      "action": "Initialized TransitOps platform database."
+    },
+    {
+      "timestamp": "2026-07-12T10:13:02.086Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:15:11.951Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:15:56.561Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:19:27.171Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:20:42.512Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:21:39.167Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:22:43.501Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:34:56.345Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:37:11.357Z",
+      "user": "manager@transitops.com",
+      "action": "Logged in successfully from IP ::1"
+    },
+    {
+      "timestamp": "2026-07-12T10:38:17.922Z",
+      "user": "alex@transitops.com",
+      "action": "Driver attendance recorded: clock-in"
+    },
+    {
+      "timestamp": "2026-07-12T10:38:20.938Z",
+      "user": "alex@transitops.com",
+      "action": "Driver attendance recorded: clock-out"
+    }
+  ]
+}
