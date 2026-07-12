@@ -1,109 +1,62 @@
-# TransitOps Backend
+# side-channel-weakmap <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
 
-A custom REST API backend for the TransitOps frontend. Every piece of business
-logic that used to live only in the browser (trip lifecycle rules, license
-expiry checks, cargo/max-load validation, role permissions, KPI/report math)
-now runs **server-side**, so it can't be bypassed by editing client code or
-calling the API directly with a modified request.
+[![github actions][actions-image]][actions-url]
+[![coverage][codecov-image]][codecov-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
-## Why no Express / no database driver?
+[![npm badge][npm-badge-png]][package-url]
 
-This was built in a sandboxed environment with no access to the npm
-registry, so it's dependency-free by necessity: just Node's built-in `http`
-module for the server/router, and a JSON file for storage. It's a genuine,
-working REST API — not a mock — but if you're taking this to production I'd
-swap two things:
+Store information about any JS value in a side channel. Uses WeakMap if available.
 
-1. **`db.js`** → replace with a real database (Postgres, MySQL, Mongo...).
-   Every other file only calls `db.getAll / findById / insert / update`, so
-   this is a contained swap.
-2. **`server.js`** router → optionally move to Express/Fastify once you have
-   npm access; the route handlers themselves (in `server.js`, calling into
-   `business.js`) can move over almost unchanged.
+Warning: this implementation will leak memory until you `delete` the `key`.
+Use [`side-channel`](https://npmjs.com/side-channel) for the best available strategy.
 
-## Running it
+## Getting started
 
-```bash
-cd transitops-backend
-node server.js
+```sh
+npm install --save side-channel-weakmap
 ```
 
-Then open **http://localhost:3001** — that's the connected frontend, served
-by this same server so there's no CORS to deal with. The API itself lives
-under `http://localhost:3001/api/*`.
+## Usage/Examples
 
-No `npm install` step is needed — there are zero dependencies.
+```js
+const assert = require('assert');
+const getSideChannelList = require('side-channel-weakmap');
 
-## Project layout
+const channel = getSideChannelList();
 
-```
-server.js      HTTP server, routing, request/response plumbing
-auth.js        Bearer-token sessions + the role → permission matrix (RBAC)
-business.js    Domain rules: trip lifecycle, KPIs, per-vehicle report, CSV export
-db.js          JSON-file persistence (data/db.json), swap-out point for a real DB
-public/        The frontend (index.html), now wired to call the API via fetch()
-data/db.json   Auto-created on first run, seeded with the original demo data
-```
+const key = {};
+assert.equal(channel.has(key), false);
+assert.throws(() => channel.assert(key), TypeError);
 
-## Auth model
+channel.set(key, 42);
 
-Login is intentionally the same "demo" auth the original frontend had — any
-email + a 4+ character password, plus a chosen role — but now the server
-issues a real bearer token and **enforces** the permission matrix on every
-write route, rather than just hiding buttons in the UI:
+channel.assert(key); // does not throw
+assert.equal(channel.has(key), true);
+assert.equal(channel.get(key), 42);
 
-```
-Fleet Manager     — vehicles: write, maintenance: write, others: read
-Driver            — trips: write, fuel: write, others: read
-Safety Officer    — drivers: write, others: read
-Financial Analyst — fuel: write, reports: write, others: read
+channel.delete(key);
+assert.equal(channel.has(key), false);
+assert.throws(() => channel.assert(key), TypeError);
 ```
 
-`POST /api/auth/login` → `{ token, user }`. Send the token back as
-`Authorization: Bearer <token>` on every subsequent request. Sessions live in
-memory and reset if the server restarts.
+## Tests
 
-## API reference
+Clone the repo, `npm install`, and run `npm test`
 
-| Method | Path                              | Access          | Notes |
-|--------|------------------------------------|-----------------|-------|
-| POST   | `/api/auth/login`                  | public          | `{email, password, role}` |
-| POST   | `/api/auth/logout`                 | authenticated   | |
-| GET    | `/api/auth/me`                     | authenticated   | current user + permissions |
-| GET    | `/api/bootstrap`                   | authenticated   | user + all collections + KPIs, one call |
-| GET    | `/api/vehicles`                    | vehicles:read   | |
-| POST   | `/api/vehicles`                    | vehicles:write  | validates unique `reg` |
-| PATCH  | `/api/vehicles/:id/retire`         | vehicles:write  | |
-| GET    | `/api/drivers`                     | drivers:read    | |
-| POST   | `/api/drivers`                     | drivers:write   | |
-| PATCH  | `/api/drivers/:id/suspend`         | drivers:write   | |
-| PATCH  | `/api/drivers/:id/reinstate`       | drivers:write   | |
-| GET    | `/api/trips`                       | trips:read      | |
-| POST   | `/api/trips`                       | trips:write     | checks vehicle/driver availability, license expiry, max load |
-| PATCH  | `/api/trips/:id/dispatch`          | trips:write     | Draft → Dispatched |
-| PATCH  | `/api/trips/:id/complete`          | trips:write     | Dispatched → Completed; auto-logs fuel if `fuelUsed > 0` |
-| PATCH  | `/api/trips/:id/cancel`            | trips:write     | reverts vehicle/driver to Available if it was Dispatched |
-| GET    | `/api/maintenance`                 | maintenance:read| |
-| POST   | `/api/maintenance`                 | maintenance:write| opens record, moves vehicle to "In Shop" |
-| PATCH  | `/api/maintenance/:id/close`       | maintenance:write| closes record, restores vehicle status |
-| GET    | `/api/fuel-logs`                   | fuel:read       | |
-| POST   | `/api/fuel-logs`                   | fuel:write      | |
-| GET    | `/api/expenses`                    | fuel:read       | |
-| POST   | `/api/expenses`                    | fuel:write      | |
-| GET    | `/api/reports/kpis`                | reports:read    | |
-| GET    | `/api/reports/per-vehicle`         | reports:read    | distance, efficiency, opex, ROI per vehicle |
-| GET    | `/api/reports/export.csv`          | reports:write   | downloadable CSV |
-| POST   | `/api/dev/reset`                   | public          | resets the DB back to seed data — handy for demos, remove before real deployment |
-
-All error responses are `{ "error": "message" }` with an appropriate HTTP
-status (400 validation, 401 unauthenticated, 403 forbidden, 404 not found,
-409 business-rule conflict).
-
-## What changed in the frontend
-
-`public/index.html` is the same UI, but every function that used to mutate
-`state.vehicles` / `state.trips` / etc. directly now calls the API and
-reloads from the server afterwards (see `refresh()` in the `<script>` block),
-so the UI always reflects server-authoritative state — including validation
-errors, which now surface as the same toast notifications the app already
-had.
+[package-url]: https://npmjs.org/package/side-channel-weakmap
+[npm-version-svg]: https://versionbadg.es/ljharb/side-channel-weakmap.svg
+[deps-svg]: https://david-dm.org/ljharb/side-channel-weakmap.svg
+[deps-url]: https://david-dm.org/ljharb/side-channel-weakmap
+[dev-deps-svg]: https://david-dm.org/ljharb/side-channel-weakmap/dev-status.svg
+[dev-deps-url]: https://david-dm.org/ljharb/side-channel-weakmap#info=devDependencies
+[npm-badge-png]: https://nodei.co/npm/side-channel-weakmap.png?downloads=true&stars=true
+[license-image]: https://img.shields.io/npm/l/side-channel-weakmap.svg
+[license-url]: LICENSE
+[downloads-image]: https://img.shields.io/npm/dm/side-channel-weakmap.svg
+[downloads-url]: https://npm-stat.com/charts.html?package=side-channel-weakmap
+[codecov-image]: https://codecov.io/gh/ljharb/side-channel-weakmap/branch/main/graphs/badge.svg
+[codecov-url]: https://app.codecov.io/gh/ljharb/side-channel-weakmap/
+[actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/ljharb/side-channel-weakmap
+[actions-url]: https://github.com/ljharb/side-channel-weakmap/actions
